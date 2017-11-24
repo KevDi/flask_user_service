@@ -1,5 +1,6 @@
 import unittest
 import coverage
+import os
 from flask_script import Manager
 from flask_migrate import MigrateCommand
 from project import create_app, db
@@ -52,6 +53,11 @@ def seed_db():
         email='michael@mherman.org',
         password='test'
     ))
+    db.session.add(User(
+        username='admin',
+        email='admin@mjkd.de',
+        password=os.environ.get('ADMIN_PASSWORD')
+        ))
     db.session.commit()
 
 
