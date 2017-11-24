@@ -305,3 +305,21 @@ class TestAuthBlueprint(BaseTestCase):
             self.assertTrue(
                 data['message'] == 'Something went wrong. Please contact us.')
             self.assertEqual(response.status_code, 401)
+
+    def test_disabled_register_route(self):
+        self.app.config['REGISTER_DEACTIVATED'] = True
+        with self.client:
+            response = self.client.post(
+                '/auth/register',
+                data=json.dumps(dict(
+                    username='justatest',
+                    email='test@test.com',
+                    password='123456'
+                )),
+                content_type='application/json'
+            )
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'Failed')
+            self.assertTrue(data['message'] == 'Registration not allowed!')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 403)

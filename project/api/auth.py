@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from sqlalchemy import exc, or_
 
 from project.api.utils import authenticate
@@ -10,6 +10,13 @@ auth_blueprint = Blueprint('auth', __name__)
 
 @auth_blueprint.route('/auth/register', methods=['POST'])
 def register_user():
+    if current_app.config.get('REGISTER_DEACTIVATED'):
+        response_object = {
+            'status': 'Failed',
+            'message': 'Registration not allowed!'
+        }
+        return jsonify(response_object), 403
+
     post_data = request.get_json()
     if not post_data:
         response_object = {
