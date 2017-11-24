@@ -61,7 +61,6 @@ def seed_db():
     db.session.commit()
 
 
-
 @manager.command
 def cov():
     """Runs the unit tests with coverage."""

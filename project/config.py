@@ -10,6 +10,7 @@ class BaseConfig:
     BCRYPT_LOG_ROUNDS = 13
     TOKEN_EXPIRATION_DAYS = 30
     TOKEN_EXPIRATION_SECONDS = 0
+    REGISTER_DEACTIVATED = False
 
 
 class DevelopmentConfig(BaseConfig):
@@ -33,3 +34,4 @@ class ProductionConfig(BaseConfig):
     """Production configuration"""
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    REGISTER_DEACTIVATED = True

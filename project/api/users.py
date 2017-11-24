@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, render_template
+from flask import Blueprint, jsonify, request
 
 from project.api.models import User
 from project.api.utils import authenticate, is_admin
