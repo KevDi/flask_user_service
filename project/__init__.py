@@ -11,6 +11,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 bcrypt = Bcrypt()
 
+
 def create_app():
 
     # instantiate the app
@@ -19,8 +20,8 @@ def create_app():
     CORS(app)
 
     # set config
-    app_settings = os.getenv('APP_SETTINGS')
-    app.config.from_object(app_settings)
+    app.config.from_object('project.config.BaseConfig')
+    app.config.from_envvar('APP_CONFIG',silent=True)
 
     # set up extensions
     db.init_app(app)
